@@ -4,6 +4,9 @@ import cors from 'cors'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
 
+// Routes
+import userRouter from './routes/user.routes.js'
+
 // dotenv
 dotenv.config()
 
@@ -16,6 +19,9 @@ app.use(morgan('dev'))
 app.use(express.json({ limit: '30mb', extended: true }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
+
+// Routes
+app.use('/users', userRouter)
 
 const PORT = process.env.PORT || 8080;
 
