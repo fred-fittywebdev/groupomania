@@ -2,10 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as api from '../api'
 
 //Actions
+// login
 export const login = createAsyncThunk('auth/login', async ({ formValue, navigate, toast }, { rejectWithValue }) => {
     try {
         const response = await api.signin(formValue)
-        toast.success("connexion résussie")
+        toast.success("Connexion résussie")
         navigate('/')
 
         return response.data
@@ -14,6 +15,20 @@ export const login = createAsyncThunk('auth/login', async ({ formValue, navigate
     }
 })
 
+//registerexport const login = createAsyncThunk('auth/login', async ({ formValue, navigate, toast }, { rejectWithValue }) => {
+export const register = createAsyncThunk('auth/register', async ({ formValue, navigate, toast }, { rejectWithValue }) => {
+    try {
+        const response = await api.signup(formValue)
+        toast.success("inscription résussie")
+        navigate('/')
+
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+//login
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
@@ -31,6 +46,18 @@ const authSlice = createSlice({
             state.user = action.payload
         },
         [login.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+        [register.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [register.fulfilled]: (state, action) => {
+            state.loading = false;
+            localStorage.setItem('profile', JSON.stringify({ ...action.payload }))
+            state.user = action.payload
+        },
+        [register.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message
         }

@@ -48,7 +48,7 @@ const Login = () => {
                             <MDBInput label="Email" type="email" value={email} name="email" onChange={onInputChange} required />
                         </MDBValidationItem>
                         <MDBValidationItem className="col-md-12" feedback='Veuillez entrer votre mot de passe' invalid>
-                            <MDBInput label="Password" type="password" value={password} name="password" onChange={onInputChange} required />
+                            <MDBInput label="Mot de passe" type="password" value={password} name="password" onChange={onInputChange} required />
                         </MDBValidationItem>
                         <div className="col-12">
                             <MDBBtn style={{ width: '100%' }}>
