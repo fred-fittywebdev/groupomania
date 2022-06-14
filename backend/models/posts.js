@@ -11,5 +11,4 @@ const postSchema = mongoose.Schema({
     likeCount: { type: Number, default: 0 },
 })
 
-const PostModel = mongoose.model('Post', postSchema);
-export default PostModel
+export default mongoose.model('Post', postSchema);

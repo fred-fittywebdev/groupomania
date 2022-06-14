@@ -1,4 +1,5 @@
 import PostModel from '../models/posts.js';
+import mongoose from 'mongoose';
 
 
 // Création d'un post
@@ -6,6 +7,7 @@ export const createPost = async (req, res) => {
     const post = req.body
     const newPost = new PostModel({
         ...post,
+        creator: req.userId,
         createdAt: new Date().toISOString()
     })
 
@@ -21,7 +23,7 @@ export const createPost = async (req, res) => {
 export const getPosts = async (req, res) => {
     try {
         const posts = await PostModel.find()
-        res.status(200).json(tours)
+        res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({ message: 'Une erreur est survenue.' })
     }
