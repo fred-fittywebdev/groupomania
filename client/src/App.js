@@ -9,6 +9,7 @@ import Header from './components/Header';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setUser } from './redux/features/authSlice';
+import AddEditPost from './pages/AddEditPost';
 
 function App() {
   const dispatch = useDispatch()
@@ -27,6 +28,8 @@ function App() {
           <Route path='/' exact element={<Home />} />
           <Route path='/login' exact element={<Login />} />
           <Route path='/register' exact element={<Register />} />
+          <Route path='/addPost' element={<AddEditPost />} />
+          <Route path='/editPost/:id' element={<AddEditPost />} />
         </Routes>
       </div>
     </BrowserRouter>

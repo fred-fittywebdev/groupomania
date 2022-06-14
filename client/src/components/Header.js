@@ -3,6 +3,9 @@ import { MDBNavbar, MDBContainer, MDBicon, MDBNavbarNav, MDBNavbarItem, MDBNavba
 import { useDispatch, useSelector } from 'react-redux'
 import { setLogout } from '../redux/features/authSlice'
 
+// image
+import groupomania from '../images/icon.svg'
+
 const Header = () => {
     // Hamburger menu state
     const [show, setShow] = useState(false)
@@ -17,6 +20,7 @@ const Header = () => {
         <MDBNavbar fixed='top' expand='lg' style={{ backgroundColor: '#ffd7d7' }}>
             <MDBContainer>
                 <MDBNavbarBrand href='/' style={{ color: '#4E5166', fontWeight: '600', fontSize: '22px' }}>
+                    <img className="logo" src={groupomania} alt="Logo du site" />
                     GROUPOMANIA
                 </MDBNavbarBrand>
                 <MDBNavbarToggler type='button' aria-expanded='false' aria-label='Toggle navigation' onClick={() => setShow(!show)} style={{ color: '#4E5166' }} >
@@ -35,7 +39,7 @@ const Header = () => {
                         {user?.result?._id && (
                             <>
                                 <MDBNavbarItem>
-                                    <MDBNavbarLink href='/add-tour'>
+                                    <MDBNavbarLink href='/addPost'>
                                         <p className='header-text'>Ajouter un Post</p>
                                     </MDBNavbarLink>
                                 </MDBNavbarItem>

@@ -11,18 +11,23 @@ code {
 }
 
 /* LOGIN PAGE */
-.login_btn {
+.login_btn,
+.btn_clear {
 	background-color: #fd2d01 !important;
 	color: #4e5166 !important;
 	width: 100% !important;
 }
 
-.login_btn:hover {
+.login_btn:hover,
+.btn_clear:hover {
 	background-color: #4e5166 !important;
 	color: #fd2d01 !important;
 }
 
 /* HEADER COMPONENT */
+.logo {
+	width: 35px;
+}
 .header-text {
 	color: #4e5166;
 	font-weight: 500;
@@ -32,4 +37,34 @@ code {
 
 .user_infos {
 	margin: 1.5rem 2.5rem 0 0;
+}
+
+/* ADD POST PAGE */
+.preview_wrapper,
+.image_preview {
+	width: 100%;
+}
+
+.preview_wrapper {
+	position: relative;
+}
+
+.close_preview {
+	position: absolute;
+	right: 5%;
+	font-size: 20px;
+	top: 2%;
+}
+
+.btn_post {
+	margin-top: 10px;
+	background-color: #ffd7df !important;
+	color: #4e5166 !important;
+	width: 100% !important;
+}
+
+.btn_post:hover {
+	background-color: #4e5166 !important;
+	color: #ffd7df !important;
+	width: 100% !important;
 }
