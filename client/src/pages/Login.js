@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { login } from '../redux/features/authSlice'
-import { GoogleLogin } from "react-google-login"
 
 
 const initialState = {
@@ -38,13 +37,6 @@ const Login = () => {
         setFormValue({ ...formValue, [name]: value })
     }
 
-    const googleSuccess = (response) => {
-        console.log(response)
-    }
-    const googleFailure = (error) => {
-        toast.error(error)
-    }
-
     return (
         <div style={{ margin: 'auto', padding: '15px', maxWidth: '450px', alignContent: 'center', marginTop: '120px', }}>
             <MDBCard alignment='center'>
@@ -59,7 +51,7 @@ const Login = () => {
                             <MDBInput label="Mot de passe" type="password" value={password} name="password" onChange={onInputChange} required />
                         </MDBValidationItem>
                         <div className="col-12">
-                            <MDBBtn style={{ width: '100%' }}>
+                            <MDBBtn className='login_btn' style={{ width: '100%' }}>
                                 {loading && (
                                     <MDBSpinner size='sm' role='status' tag='span' className='me-2' />
                                 )}
@@ -68,25 +60,9 @@ const Login = () => {
                         </div>
                     </MDBValidation>
                     <br></br>
-                    <GoogleLogin
-                        clientId='209682645012-9a9p034v432q04atrmlpftfg6hciofcr.apps.googleusercontent.com'
-                        render={(renderProps) => (
-                            <MDBBtn
-                                style={{ width: '100%' }}
-                                color='danger'
-                                onClick={(renderProps.onClick)}
-                                disabled={renderProps.disabled}
-                            >
-                                <MDBIcon className='me-2' fab icon='google' /> S'inscrire avec Google
-                            </MDBBtn>
-                        )}
-                        onSuccess={googleSuccess}
-                        onFailure={googleFailure}
-                        cookiePolicy='single_host_origin'
-                    />
                 </MDBCardBody>
                 <MDBCardFooter>
-                    <Link to='/register'>
+                    <Link style={{ color: '#fd2d01' }} to='/register'>
                         <p>Pas encore de compte? Inscrivez-vous.</p>
                     </Link>
                 </MDBCardFooter>

@@ -9,3 +9,27 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
 }
+
+/* LOGIN PAGE */
+.login_btn {
+	background-color: #fd2d01 !important;
+	color: #4e5166 !important;
+	width: 100% !important;
+}
+
+.login_btn:hover {
+	background-color: #4e5166 !important;
+	color: #fd2d01 !important;
+}
+
+/* HEADER COMPONENT */
+.header-text {
+	color: #4e5166;
+	font-weight: 500;
+	margin-top: 0.9375rem;
+	font-size: 1.0625rem;
+}
+
+.user_infos {
+	margin: 1.5rem 2.5rem 0 0;
+}

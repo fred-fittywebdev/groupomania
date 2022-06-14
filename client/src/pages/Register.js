@@ -66,7 +66,7 @@ const Register = () => {
                             <MDBInput label="Confirmez votre mot de passe" type="password" value={confirmPassword} name="confirmPassword" onChange={onInputChange} required />
                         </MDBValidationItem>
                         <div className="col-12">
-                            <MDBBtn style={{ width: '100%' }}>
+                            <MDBBtn className='login_btn'>
                                 {loading && (
                                     <MDBSpinner size='sm' role='status' tag='span' className='me-2' />
                                 )}
@@ -76,7 +76,7 @@ const Register = () => {
                     </MDBValidation>
                 </MDBCardBody>
                 <MDBCardFooter>
-                    <Link to='/login'>
+                    <Link style={{ color: '#fd2d01' }} to='/login'>
                         <p>Vous avez déjà un compte? connectez-vous.</p>
                     </Link>
                 </MDBCardFooter>
