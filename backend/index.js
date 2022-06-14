@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 
 // Routes
 import userRouter from './routes/user.routes.js'
+import postRouter from './routes/post.routes.js'
 
 // dotenv
 dotenv.config()
@@ -22,6 +23,7 @@ app.use(cors())
 
 // Routes
 app.use('/users', userRouter)
+app.use('/tour', postRouter)
 
 const PORT = process.env.PORT || 8080;
 
