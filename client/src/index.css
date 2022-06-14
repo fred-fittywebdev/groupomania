@@ -68,3 +68,18 @@ code {
 	color: #ffd7df !important;
 	width: 100% !important;
 }
+
+/* POSTTOUR COMPONENET */
+.top_left {
+	position: absolute;
+	top: 8px;
+	left: 16px;
+	color: #fff;
+	font-weight: 600;
+	font-size: 18px;
+}
+
+.tag_card {
+	margin: 10px 0 0 20px;
+	color: #fd2d01;
+}

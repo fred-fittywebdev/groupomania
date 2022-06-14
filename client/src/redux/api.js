@@ -15,5 +15,5 @@ export const signin = (formData) => API.post('/users/signin', formData)
 export const signup = (formData) => API.post('/users/signup', formData)
 
 // Routes pour les posts
-
 export const createPost = (postData) => API.post('/post', postData)
+export const getTours = () => API.get('/post')
