@@ -28,3 +28,14 @@ export const getPosts = async (req, res) => {
         res.status(404).json({ message: 'Une erreur est survenue.' })
     }
 }
+
+// Récupération d'un seul post grâce a son ID'
+export const getPost = async (req, res) => {
+    const { id } = req.params
+    try {
+        const post = await PostModel.findById(id)
+        res.status(200).json(post)
+    } catch (error) {
+        res.status(404).json({ message: 'Une erreur est survenue.' })
+    }
+}
