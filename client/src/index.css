@@ -70,16 +70,16 @@ code {
 }
 
 /* POSTTOUR COMPONENET */
+.info_wrapper {
+	margin: 20px 0 0 20px;
+	text-align: left;
+}
 .top_left {
-	position: absolute;
-	top: 8px;
-	left: 16px;
-	color: #fff;
+	color: #4e5166;
 	font-weight: 600;
 	font-size: 18px;
 }
 
 .tag_card {
-	margin: 10px 0 0 20px;
 	color: #fd2d01;
 }

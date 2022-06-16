@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setUser } from './redux/features/authSlice';
 import AddEditPost from './pages/AddEditPost';
+import SinglePost from './pages/SinglePost';
 
 function App() {
   const dispatch = useDispatch()
@@ -30,6 +31,7 @@ function App() {
           <Route path='/register' exact element={<Register />} />
           <Route path='/addPost' element={<AddEditPost />} />
           <Route path='/editPost/:id' element={<AddEditPost />} />
+          <Route path='/post/:id' element={<SinglePost />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -15,11 +15,23 @@ export const createPost = createAsyncThunk(
         }
     })
 
-export const getTours = createAsyncThunk(
-    'post/getTours',
+export const getPosts = createAsyncThunk(
+    'post/getPosts',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await api.getTours()
+            const response = await api.getPosts()
+
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    })
+
+export const getPost = createAsyncThunk(
+    'post/getPost',
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await api.getPost(id)
 
             return response.data
         } catch (error) {
@@ -48,14 +60,25 @@ const postSlice = createSlice({
             state.loading = false;
             state.error = action.payload.message
         },
-        [getTours.pending]: (state, action) => {
+        [getPosts.pending]: (state, action) => {
             state.loading = true;
         },
-        [getTours.fulfilled]: (state, action) => {
+        [getPosts.fulfilled]: (state, action) => {
             state.loading = false;
             state.posts = action.payload
         },
-        [getTours.rejected]: (state, action) => {
+        [getPosts.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+        [getPost.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [getPost.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.post = action.payload
+        },
+        [getPost.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message
         },

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTours } from '../redux/features/postSlice'
+import { getPosts } from '../redux/features/postSlice'
 import PostTour from '../components/PostTour'
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getTours())
+        dispatch(getPosts())
     }, [])
 
     if (loading) {
