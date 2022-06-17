@@ -67,7 +67,7 @@ export const deletePost = async (req, res) => {
     }
 }
 
-// MODIFIER un post
+// Modifier un post
 export const updatePost = async (req, res) => {
     const { id } = req.params
     const { title, content, creator, imageFile, tags } = req.body
@@ -90,5 +90,18 @@ export const updatePost = async (req, res) => {
         res.json(updatedPost)
     } catch (error) {
         res.status(404).json({ message: 'Une erreur est survenue.' })
+    }
+}
+
+// Chercher un posta
+export const getPostsBySearch = async (req, res) => {
+    const { searchQuery } = req.query
+
+    try {
+        const title = new RegExp(searchQuery, 'i')
+        const posts = await PostModel.find({ title })
+        res.json(posts)
+    } catch (error) {
+        res.status(404).json({ message: 'une erreur est survenue, la recherche n\'a pas donné de résultat' })
     }
 }
