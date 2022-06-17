@@ -2,15 +2,32 @@ import React, { useState } from 'react'
 import { MDBNavbar, MDBContainer, MDBNavbarNav, MDBNavbarItem, MDBNavbarLink, MDBNavbarToggler, MDBCollapse, MDBNavbarBrand, MDBIcon } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLogout } from '../redux/features/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 // image
 import groupomania from '../images/icon.svg'
+import { searchPosts } from '../redux/features/postSlice'
 
 const Header = () => {
     // Hamburger menu state
     const [show, setShow] = useState(false)
+    // search
+    const [search, setSearch] = useState('')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { user } = useSelector((state) => ({ ...state.auth }))
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        if (search) {
+            dispatch(searchPosts(search))
+            navigate(`/posts/search?search=${search}`)
+            setSearch('')
+        } else {
+            navigate('/')
+        }
+    }
 
     const handleLogout = () => {
         dispatch(setLogout())
@@ -64,6 +81,18 @@ const Header = () => {
                             </MDBNavbarItem>
                         )}
                     </MDBNavbarNav>
+                    <form className='d-flex input-group w-auto' onSubmit={handleSubmit}>
+                        <input
+                            type='text'
+                            className='form-control'
+                            placeholder='Rechercher'
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                        <div style={{ marginTop: '5px', marginLeft: '5px' }}>
+                            <MDBIcon className='search-icon' onClick={handleSubmit} fas icon='search' />
+                        </div>
+                    </form>
                 </MDBCollapse>
             </MDBContainer>
         </MDBNavbar >

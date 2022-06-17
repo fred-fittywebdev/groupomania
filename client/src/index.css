@@ -39,6 +39,10 @@ code {
 	margin: 1.5rem 2.5rem 0 0;
 }
 
+.search-icon {
+	cursor: pointer;
+}
+
 /* ADD POST PAGE */
 .preview_wrapper,
 .image_preview {
