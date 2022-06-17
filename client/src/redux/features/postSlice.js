@@ -51,6 +51,31 @@ export const getPostsByUser = createAsyncThunk(
         }
     })
 
+export const deletePost = createAsyncThunk(
+    'post/deletePost',
+    async ({ id, toast }, { rejectWithValue }) => {
+        try {
+            const response = await api.deletePost(id)
+            toast.success('post supprimé avec success.')
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    })
+
+export const updatePost = createAsyncThunk(
+    'post/updatePost',
+    async ({ id, updatedPostData, toast, navigate }, { rejectWithValue }) => {
+        try {
+            const response = await api.updatePost(updatedPostData, id)
+            toast.success('post modifié avec success.')
+            navigate('/')
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    })
+
 const postSlice = createSlice({
     name: 'post',
     initialState: {
@@ -102,6 +127,36 @@ const postSlice = createSlice({
             state.userPosts = action.payload
         },
         [getPostsByUser.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+        [deletePost.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [deletePost.fulfilled]: (state, action) => {
+            state.loading = false;
+            const { arg: { id } } = action.meta
+            if (id) {
+                state.userPosts = state.userPosts.filter((item) => item._id !== id)
+                state.posts = state.posts.filter((item) => item._id !== id)
+            }
+        },
+        [deletePost.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+        [updatePost.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [updatePost.fulfilled]: (state, action) => {
+            state.loading = false;
+            const { arg: { id }, } = action.meta
+            if (id) {
+                state.userPosts = state.userPosts.map((item) => item._id === id ? action.payload : item)
+                state.posts = state.posts.map((item) => item._id === id ? action.payload : item)
+            }
+        },
+        [updatePost.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message
         },

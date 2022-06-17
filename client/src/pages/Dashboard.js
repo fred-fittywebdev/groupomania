@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import { MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBCardGroup } from 'mdb-react-ui-kit'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getPostsByUser } from '../redux/features/postSlice'
+import { getPostsByUser, deletePost } from '../redux/features/postSlice'
 import Spinner from '../components/Spinner'
+import { toast } from 'react-toastify'
 
 const Dashboard = () => {
     const { user } = useSelector((state) => ({ ...state.auth }))
@@ -26,6 +27,12 @@ const Dashboard = () => {
 
     if (loading) {
         return <Spinner />
+    }
+
+    const handleDelete = (id) => {
+        if (window.confirm('Etes vous sur de vouloir supprimer ce post?')) {
+            dispatch(deletePost({ id, toast }))
+        }
     }
 
 
@@ -64,6 +71,7 @@ const Dashboard = () => {
                                                 icon='trash'
                                                 style={{ color: '#fd2d01' }}
                                                 size='lg'
+                                                onClick={() => handleDelete(item._id)}
                                             />
                                         </MDBBtn>
                                         <Link to={`/editPost/${item._id}`}>

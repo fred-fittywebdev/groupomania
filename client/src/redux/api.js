@@ -18,4 +18,6 @@ export const signup = (formData) => API.post('/users/signup', formData)
 export const createPost = (postData) => API.post('/post', postData)
 export const getPosts = () => API.get('/post')
 export const getPost = (id) => API.get(`/post/${id}`)
+export const deletePost = (id) => API.delete(`/post/${id}`)
+export const updatePost = (updatedPostData, id) => API.patch(`/post/${id}`, updatedPostData)
 export const getPostsByUser = (userId) => API.get(`/post/userPosts/${userId}`) // id -> celle de l'utilisateur
