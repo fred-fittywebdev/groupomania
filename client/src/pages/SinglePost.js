@@ -8,7 +8,7 @@ import 'moment/locale/fr'
 
 const SinglePost = () => {
     const dispatch = useDispatch()
-    const { post } = useSelector((state) => ({ ...state.tour }))
+    const { post } = useSelector((state) => ({ ...state.post }))
     const { id } = useParams()
 
     useEffect(() => {
@@ -20,23 +20,22 @@ const SinglePost = () => {
 
     return (
         <>
-            <MDBContainer>
+            <MDBContainer style={{ marginTop: '100px' }}>
                 <MDBCard className="mb-3 mt-2">
                     <MDBCardImage
                         position='top'
-                        style={{ width: '100%', maxHeight: '600px' }}
+                        style={{ width: '100%', maxHeight: '600px', objectFit: 'cover' }}
                         src={post?.imageFile}
                         alt={post?.title}
                     />
-                    {post?.name}
                     <MDBCardBody>
                         <h3>{post?.title}</h3>
                         <span>
                             <p className="text-start postname">Auteur: {post?.name}</p>
                         </span>
                         <div style={{ float: 'left' }}>
-                            <span className="text-start">
-                                {post?.tags.map((item) => `#${item} `)}
+                            <span style={{ color: '#fd2d01' }} className="text-start">
+                                {post && post.tags && post?.tags.map((item) => `#${item} `)}
                             </span>
                         </div>
                         <br />
@@ -47,6 +46,7 @@ const SinglePost = () => {
                                 {moment(post?.createdAt).fromNow()}
                             </small>
                         </MDBCardText>
+                        <hr />
                         <MDBCardText className='lead mb-0 text-start'>
                             {post?.content}
                         </MDBCardText>

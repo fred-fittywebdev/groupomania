@@ -15,9 +15,9 @@ const PostTour = ({ imageFile, title, content, tags, _id, name }) => {
         <MDBCardGroup>
 
             <MDBCard className='h-100 mt-2 d-sm-flex' style={{ maxWidth: '20rem' }}>
-
-                <MDBCardImage src={imageFile} alt={title} position='top' style={{ maxWidth: '100%', maxHeight: '180px', objectFit: 'cover' }} />
-
+                {imageFile && (
+                    <MDBCardImage src={imageFile} alt={title} position='top' style={{ maxWidth: '100%', maxHeight: '180px', objectFit: 'cover' }} />
+                )}
                 <div className="info_wrapper">
                     <div className="top_left">{name}</div>
                     <span className="text-start tag_card">{tags.map((item) => `#${item} `)}</span>

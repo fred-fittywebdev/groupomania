@@ -3,6 +3,7 @@ import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPosts } from '../redux/features/postSlice'
 import PostTour from '../components/PostTour'
+import Spinner from '../components/Spinner'
 
 const Home = () => {
     const { posts, loading } = useSelector((state) => ({ ...state.post }))
@@ -13,7 +14,7 @@ const Home = () => {
     }, [])
 
     if (loading) {
-        return <h2>Loading ...</h2>
+        return <Spinner />
     }
 
     return (

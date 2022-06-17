@@ -11,6 +11,8 @@ import { useEffect } from 'react';
 import { setUser } from './redux/features/authSlice';
 import AddEditPost from './pages/AddEditPost';
 import SinglePost from './pages/SinglePost';
+import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const dispatch = useDispatch()
@@ -29,9 +31,10 @@ function App() {
           <Route path='/' exact element={<Home />} />
           <Route path='/login' exact element={<Login />} />
           <Route path='/register' exact element={<Register />} />
-          <Route path='/addPost' element={<AddEditPost />} />
-          <Route path='/editPost/:id' element={<AddEditPost />} />
+          <Route path='/addPost' element={<PrivateRoute> <AddEditPost /> </PrivateRoute>} />
+          <Route path='/editPost/:id' element={<PrivateRoute> <AddEditPost /> </PrivateRoute>} />
           <Route path='/post/:id' element={<SinglePost />} />
+          <Route path='/dashboard' element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
         </Routes>
       </div>
     </BrowserRouter>

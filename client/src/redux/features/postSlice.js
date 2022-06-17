@@ -39,6 +39,18 @@ export const getPost = createAsyncThunk(
         }
     })
 
+export const getPostsByUser = createAsyncThunk(
+    'post/getPostsByUser',
+    async (userId, { rejectWithValue }) => {
+        try {
+            const response = await api.getPostsByUser(userId)
+
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    })
+
 const postSlice = createSlice({
     name: 'post',
     initialState: {
@@ -79,6 +91,17 @@ const postSlice = createSlice({
             state.post = action.payload
         },
         [getPost.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+        [getPostsByUser.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [getPostsByUser.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.userPosts = action.payload
+        },
+        [getPostsByUser.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message
         },
