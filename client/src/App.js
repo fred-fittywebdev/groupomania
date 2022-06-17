@@ -13,6 +13,7 @@ import AddEditPost from './pages/AddEditPost';
 import SinglePost from './pages/SinglePost';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import NotFound from './pages/NotFound';
 
 function App() {
   const dispatch = useDispatch()
@@ -35,6 +36,7 @@ function App() {
           <Route path='/editPost/:id' element={<PrivateRoute> <AddEditPost /> </PrivateRoute>} />
           <Route path='/post/:id' element={<SinglePost />} />
           <Route path='/dashboard' element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </BrowserRouter>

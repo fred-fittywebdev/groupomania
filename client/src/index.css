@@ -83,3 +83,10 @@ code {
 .tag_card {
 	color: #fd2d01;
 }
+
+.tagErrMsg {
+	color: #f93154;
+	margin-top: 5px;
+	text-align: left;
+	font-size: 14px;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { MDBCard, MDBCardBody, MDBCardFooter, MDBValidation, MDBBtn, MDBIcon, MDBSpinner, MDBInput, MDBValidationItem } from 'mdb-react-ui-kit'
+import { MDBCard, MDBCardBody, MDBValidation, MDBBtn, MDBIcon, MDBInput, MDBValidationItem } from 'mdb-react-ui-kit'
 import ChipInput from 'material-ui-chip-input'
 import Filebase from 'react-file-base64'
 import { toast } from 'react-toastify'
@@ -15,6 +15,7 @@ const initialState = {
 
 const AddEditPost = () => {
     const [postData, setPostdata] = useState(initialState)
+    const [tagErrMsg, setTagErrMsg] = useState(null)
     const { error, loading, userPosts } = useSelector((state) => ({ ...state.post }))
     const { user } = useSelector((state) => ({ ...state.auth }))
     const dispatch = useDispatch()
@@ -38,6 +39,9 @@ const AddEditPost = () => {
     // Soumission du formulaire
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (!tags.length) {
+            setTagErrMsg('Veuillez choisir un tag svp !')
+        }
         if (title && content && tags) {
             const updatedPostData = { ...postData, name: user?.result?.name }
 
@@ -57,6 +61,7 @@ const AddEditPost = () => {
 
     // Ajout et suppression d'un tag
     const handleAddTag = (tag) => {
+        setTagErrMsg(null)
         setPostdata({ ...postData, tags: [...postData.tags, tag] })
     }
     const handleDeleteTag = (deleteTag) => {
@@ -80,7 +85,7 @@ const AddEditPost = () => {
                     <MDBValidation onSubmit={handleSubmit} className='row g-3' noValidate>
                         <MDBValidationItem className="col-md-12" feedback='Veuillez entrer un titre' invalid>
                             <div className="col-md-12">
-                                <input
+                                <MDBInput
                                     placeholder='Titre'
                                     type='text'
                                     value={title}
@@ -88,20 +93,23 @@ const AddEditPost = () => {
                                     className="form-control"
                                     onChange={onInputChange}
                                     required
+                                    label='Titre'
                                 />
                             </div>
                         </MDBValidationItem>
                         <MDBValidationItem className="col-md-12" feedback='Un post ne peut pas être sans message 😜 !' invalid>
                             <div className="col-md-12">
-                                <textarea
+                                <MDBInput
                                     placeholder='Message'
                                     type='text'
-                                    style={{ height: '100px' }}
                                     value={content}
                                     name='content'
                                     className="form-control"
                                     onChange={onInputChange}
+                                    textarea
+                                    rows={4}
                                     required
+                                    label='Message'
                                 />
                             </div>
                             <div className="col-md-12 mt-5 mb-3">
@@ -114,6 +122,9 @@ const AddEditPost = () => {
                                     onAdd={(tag) => handleAddTag(tag)}
                                     onDelete={(tag) => handleDeleteTag(tag)}
                                 />
+                                {tagErrMsg && (
+                                    <div className="tagErrMsg">{tagErrMsg}</div>
+                                )}
                             </div>
                             <div className="d-flex justify-content-start my-2">
                                 <Filebase type='file' multiple={false} onDone={({ base64 }) => setPostdata({ ...postData, imageFile: base64 })} />

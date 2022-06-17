@@ -41,8 +41,8 @@ const Dashboard = () => {
             <h4 className="text-center">Tableau de bord: {user?.result?.name} </h4>
             <hr style={{ maxWidth: '570px' }} />
             {userPosts && userPosts.map((item) => (
-                <MDBCardGroup>
-                    <MDBCard style={{ maxWidth: '600px' }} key={item._id} className='mt-2'>
+                <MDBCardGroup key={item._id}>
+                    <MDBCard style={{ maxWidth: '600px' }} className='mt-2'>
                         <MDBRow className='g-0 p-2'>
                             <MDBCol md='4'>
                                 {item.imageFile && (

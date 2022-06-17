@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MDBNavbar, MDBContainer, MDBicon, MDBNavbarNav, MDBNavbarItem, MDBNavbarLink, MDBNavbarToggler, MDBCollapse, MDBNavbarBrand, MDBIcon } from 'mdb-react-ui-kit'
+import { MDBNavbar, MDBContainer, MDBNavbarNav, MDBNavbarItem, MDBNavbarLink, MDBNavbarToggler, MDBCollapse, MDBNavbarBrand, MDBIcon } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLogout } from '../redux/features/authSlice'
 
