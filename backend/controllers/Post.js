@@ -21,9 +21,21 @@ export const createPost = async (req, res) => {
 
 // Récupération de tous les posts
 export const getPosts = async (req, res) => {
+    const { page } = req.query
     try {
-        const posts = await PostModel.find().sort({ createdAt: -1 },)
-        res.status(200).json(posts)
+        // const posts = await PostModel.find().sort({ createdAt: -1 },)
+        // res.status(200).json(posts)
+
+        const limit = 3
+        const startIndex = (Number(page) - 1) * limit
+        const total = await PostModel.countDocuments({}) // On récupère le nombre total de post en bdd
+        const posts = await PostModel.find().limit(limit).skip(startIndex)
+        res.json({
+            data: posts,
+            currentPage: Number(page),
+            totalPosts: total,
+            numberOfPages: Math.ceil(total / limit)
+        })
     } catch (error) {
         res.status(404).json({ message: 'Une erreur est survenue.' })
     }
