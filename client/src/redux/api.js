@@ -16,7 +16,7 @@ export const signup = (formData) => API.post('/users/signup', formData)
 
 // Routes avec auth
 export const createPost = (postData) => API.post('/post', postData)
-export const getPosts = () => API.get('/post')
+export const getPosts = (page) => API.get(`/post?page=${page}`)
 export const getPost = (id) => API.get(`/post/${id}`)
 export const deletePost = (id) => API.delete(`/post/${id}`)
 export const updatePost = (updatedPostData, id) => API.patch(`/post/${id}`, updatedPostData)

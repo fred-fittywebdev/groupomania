@@ -1,17 +1,27 @@
 import React, { useEffect } from 'react'
 import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPosts } from '../redux/features/postSlice'
+import { getPosts, setCurrentPage } from '../redux/features/postSlice'
 import PostTour from '../components/PostTour'
 import Spinner from '../components/Spinner'
+import Pagination from '../components/Pagination'
+import { useLocation } from "react-router-dom";
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
 
 const Home = () => {
-    const { posts, loading } = useSelector((state) => ({ ...state.post }))
+    const { posts, loading, currentPage, numberOfPages } = useSelector((state) => ({ ...state.post }))
     const dispatch = useDispatch()
+    const query = useQuery()
+    const searchQuery = query.get('searchQuery')
+    const location = useLocation()
 
     useEffect(() => {
-        dispatch(getPosts())
-    }, [])
+        dispatch(getPosts(currentPage))
+    }, [currentPage])
 
     if (loading) {
         return <Spinner />
@@ -25,6 +35,11 @@ const Home = () => {
                         Aucun post à afficher !
                     </MDBTypography>
                 )}
+                {posts.length === 0 && location.pathname !== "/" && (
+                    <MDBTypography className="text-center mb-0" tag="h2">
+                        We couldn't find any matches for "{searchQuery}"
+                    </MDBTypography>
+                )}
                 <MDBCol>
                     <MDBContainer>
                         <MDBRow className="row-cols-1 row-cols-md-3 g-2">
@@ -35,6 +50,14 @@ const Home = () => {
                     </MDBContainer>
                 </MDBCol>
             </MDBRow>
+            {posts.length > 0 && !searchQuery && (
+                <Pagination
+                    setCurrentPage={setCurrentPage}
+                    numberOfPages={numberOfPages}
+                    currentPage={currentPage}
+                    dispatch={dispatch}
+                />
+            )}
         </div>
     )
 }

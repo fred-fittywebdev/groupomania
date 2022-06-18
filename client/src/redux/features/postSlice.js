@@ -17,9 +17,9 @@ export const createPost = createAsyncThunk(
 
 export const getPosts = createAsyncThunk(
     'post/getPosts',
-    async (_, { rejectWithValue }) => {
+    async (page, { rejectWithValue }) => {
         try {
-            const response = await api.getPosts()
+            const response = await api.getPosts(page)
 
             return response.data
         } catch (error) {
@@ -120,8 +120,15 @@ const postSlice = createSlice({
         userPosts: [],
         tagPosts: [],
         relatedPosts: [],
+        currentPage: 1,
+        numberOfPages: null,
         error: '',
         loading: false,
+    },
+    reducers: {
+        setCurrentPage: (state, action) => {
+            state.currentPage = action.payload
+        }
     },
     extraReducers: {
         [createPost.pending]: (state, action) => {
@@ -140,7 +147,9 @@ const postSlice = createSlice({
         },
         [getPosts.fulfilled]: (state, action) => {
             state.loading = false;
-            state.posts = action.payload
+            state.posts = action.payload.data
+            state.numberOfPages = action.payload.numberOfPages
+            state.currentPage = action.payload.currentPage
         },
         [getPosts.rejected]: (state, action) => {
             state.loading = false;
@@ -234,4 +243,5 @@ const postSlice = createSlice({
     }
 })
 
+export const { setCurrentPage } = postSlice.actions
 export default postSlice.reducer

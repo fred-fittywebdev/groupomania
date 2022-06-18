@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setLogout } from '../redux/features/authSlice'
 import { useNavigate } from 'react-router-dom'
 
+// Token
+import decode from 'jwt-decode'
+
 // image
 import groupomania from '../images/icon.svg'
 import { searchPosts } from '../redux/features/postSlice'
@@ -16,7 +19,15 @@ const Header = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { user } = useSelector((state) => ({ ...state.auth }))
+    const token = user?.token
 
+    // Ici je compare le token a l'heure actuelle et si cela fait plus d'une heure de connexion on déconnecte
+    if (token) {
+        const decodedToken = decode(token)
+        if (decodedToken.exp * 1000 < new Date().getTime()) {
+            dispatch(setLogout())
+        }
+    }
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -97,6 +108,6 @@ const Header = () => {
             </MDBContainer>
         </MDBNavbar >
     )
-}
 
+}
 export default Header
