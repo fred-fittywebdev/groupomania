@@ -117,3 +117,15 @@ export const getPostsByTag = async (req, res) => {
         res.status(404).json({ message: 'une erreur est survenue, la recherche n\'a pas donné de résultat' })
     }
 }
+
+// Posts du même genre
+export const getRelatedPosts = async (req, res) => {
+    const tags = req.body
+
+    try {
+        const posts = await PostModel.find({ tags: { $in: tags } })
+        res.json(posts)
+    } catch (error) {
+        res.status(404).json({ message: 'une erreur est survenue, la recherche n\'a pas donné de résultat' })
+    }
+}
