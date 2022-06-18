@@ -27,3 +27,4 @@ export const getPostsBySearch = (searchQuery) => API.get(`/post/search?searchQue
 
 // Liste des posts en fonction des tags
 export const getTagPosts = (tag) => API.get(`/post/tag/${tag}`)
+export const getRelatedPosts = (tags) => API.post('/post/relatedPosts', tags)

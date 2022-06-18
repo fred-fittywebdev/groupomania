@@ -2,14 +2,20 @@ import React, { useEffect } from 'react'
 import { MDBCard, MDBCardBody, MDBCardText, MDBCardImage, MDBContainer, MDBIcon } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getPost } from '../redux/features/postSlice'
+import { getPost, getRelatedPosts } from '../redux/features/postSlice'
 import moment from 'moment'
 import 'moment/locale/fr'
+import RelatedPosts from '../components/RelatedPosts'
 
 const SinglePost = () => {
     const dispatch = useDispatch()
-    const { post } = useSelector((state) => ({ ...state.post }))
+    const { post, relatedPosts } = useSelector((state) => ({ ...state.post }))
     const { id } = useParams()
+    const tags = post?.tags
+
+    useEffect(() => {
+        tags && dispatch(getRelatedPosts(tags))
+    }, [tags])
 
     useEffect(() => {
         if (id) {
@@ -51,6 +57,7 @@ const SinglePost = () => {
                             {post?.content}
                         </MDBCardText>
                     </MDBCardBody>
+                    <RelatedPosts relatedPosts={relatedPosts} postId={id} />
                 </MDBCard>
             </MDBContainer>
         </>
