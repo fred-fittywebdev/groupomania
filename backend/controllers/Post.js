@@ -123,7 +123,7 @@ export const getRelatedPosts = async (req, res) => {
     const tags = req.body
 
     try {
-        const posts = await PostModel.find({ tags: { $in: tags } })
+        const posts = await PostModel.find({ tags: { $in: tags } }).sort({ createdAt: -1 },)
         res.json(posts)
     } catch (error) {
         res.status(404).json({ message: 'une erreur est survenue, la recherche n\'a pas donné de résultat' })
