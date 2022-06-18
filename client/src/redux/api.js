@@ -24,3 +24,6 @@ export const getPostsByUser = (userId) => API.get(`/post/userPosts/${userId}`) /
 
 // Search
 export const getPostsBySearch = (searchQuery) => API.get(`/post/search?searchQuery=${searchQuery}`)
+
+// Liste des posts en fonction des tags
+export const getTagPosts = (tag) => API.get(`/post/tag/${tag}`)

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { getPostsByUser, deletePost } from '../redux/features/postSlice'
 import Spinner from '../components/Spinner'
 import { toast } from 'react-toastify'
+import { excerpt } from '../utility'
 
 const Dashboard = () => {
     const { user } = useSelector((state) => ({ ...state.auth }))
@@ -18,12 +19,6 @@ const Dashboard = () => {
         }
     }, [userId])
 
-    const excerpt = (str) => {
-        if (str.length > 35) {
-            str = str.substring(0, 35) + ' ... '
-        }
-        return str
-    }
 
     if (loading) {
         return <Spinner />
@@ -61,7 +56,7 @@ const Dashboard = () => {
                                     </MDBCardTitle>
                                     <MDBCardText className='text-start'>
                                         <small className="text-muted">
-                                            {excerpt(item.content)}
+                                            {excerpt(item.content, 35)}
                                         </small>
                                     </MDBCardText>
                                     <div style={{ marginLeft: '5px', float: 'right', marginTop: '-60px' }}>

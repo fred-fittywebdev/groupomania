@@ -73,7 +73,7 @@ code {
 	width: 100% !important;
 }
 
-/* POSTTOUR COMPONENET */
+/* POSTTOUR COMPONENT */
 .info_wrapper {
 	margin: 20px 0 0 20px;
 	text-align: left;
@@ -88,9 +88,26 @@ code {
 	color: #fd2d01;
 }
 
+.tag_card:hover {
+	color: #fd2b01b0;
+}
+
 .tagErrMsg {
 	color: #f93154;
 	margin-top: 5px;
 	text-align: left;
 	font-size: 14px;
+}
+
+/* TAGPOST COMPONENT */
+.tagPost_btn {
+	background-color: #fd2d01 !important;
+	color: #4e5166 !important;
+	width: 100% !important;
+	border-radius: 6px !important;
+}
+
+.tagPost_btn:hover {
+	background-color: #4e5166 !important;
+	color: #fd2d01 !important;
 }

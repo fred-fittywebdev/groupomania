@@ -14,6 +14,7 @@ import SinglePost from './pages/SinglePost';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './pages/NotFound';
+import TagPosts from './pages/TagPosts';
 
 function App() {
   const dispatch = useDispatch()
@@ -31,6 +32,7 @@ function App() {
         <Routes>
           <Route path='/' exact element={<Home />} />
           <Route path='/posts/search' element={<Home />} />
+          <Route path='/posts/tag/:tag' element={<TagPosts />} />
           <Route path='/login' exact element={<Login />} />
           <Route path='/register' exact element={<Register />} />
           <Route path='/addPost' element={<PrivateRoute> <AddEditPost /> </PrivateRoute>} />
