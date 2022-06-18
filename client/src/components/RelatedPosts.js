@@ -31,7 +31,7 @@ const RelatedPosts = ({ relatedPosts, postId }) => {
                                 </Link>
                                 <span className="text-start tag_card-related">
                                     {item.tags.map((tag) => (
-                                        <Link className="tag_card" to={`/posts/tag${tag}`}> #{tag}</Link>
+                                        <Link className="tag_card" to={`/posts/tag/${tag}`}> #{tag}</Link>
                                     ))}
                                 </span>
                                 <MDBCardBody>
