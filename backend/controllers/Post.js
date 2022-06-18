@@ -93,13 +93,25 @@ export const updatePost = async (req, res) => {
     }
 }
 
-// Chercher un posta
+// Chercher un post
 export const getPostsBySearch = async (req, res) => {
     const { searchQuery } = req.query
 
     try {
         const title = new RegExp(searchQuery, 'i')
         const posts = await PostModel.find({ title })
+        res.json(posts)
+    } catch (error) {
+        res.status(404).json({ message: 'une erreur est survenue, la recherche n\'a pas donné de résultat' })
+    }
+}
+
+// Trouver des post en fonction de leur tags
+export const getPostsByTag = async (req, res) => {
+    const { tag } = req.params
+
+    try {
+        const posts = await PostModel.find({ tags: { $in: tag } })
         res.json(posts)
     } catch (error) {
         res.status(404).json({ message: 'une erreur est survenue, la recherche n\'a pas donné de résultat' })
