@@ -39,6 +39,18 @@ export const getPost = createAsyncThunk(
         }
     })
 
+export const likePost = createAsyncThunk(
+    'post/likePost',
+    async ({ _id }, { rejectWithValue }) => {
+        try {
+            const response = await api.likePost(_id)
+
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    })
+
 export const getPostsByUser = createAsyncThunk(
     'post/getPostsByUser',
     async (userId, { rejectWithValue }) => {
@@ -238,6 +250,17 @@ const postSlice = createSlice({
         },
         [getRelatedPosts.rejected]: (state, action) => {
             state.loading = false;
+            state.error = action.payload.message
+        },
+        [likePost.pending]: (state, action) => { },
+        [likePost.fulfilled]: (state, action) => {
+            state.loading = false;
+            const { arg: { _id }, } = action.meta
+            if (_id) {
+                state.posts = state.posts.map((item) => item._id === _id ? action.payload : item)
+            }
+        },
+        [likePost.rejected]: (state, action) => {
             state.error = action.payload.message
         },
     }
