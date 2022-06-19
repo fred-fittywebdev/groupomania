@@ -126,7 +126,7 @@ export const getPostsByTag = async (req, res) => {
         const posts = await PostModel.find({ tags: { $in: tag } })
         res.json(posts)
     } catch (error) {
-        res.status(404).json({ message: 'une erreur est survenue, la recherche n\'a pas donné de résultat' })
+        res.status(404).json({ message: 'une erreur est survenue' })
     }
 }
 
@@ -140,4 +140,34 @@ export const getRelatedPosts = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: 'une erreur est survenue, la recherche n\'a pas donné de résultat' })
     }
+}
+
+// Mise en place des likes sur le posts
+export const likePost = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        if (!req.userId) {
+            return res.json({ message: "Vous devez être authentifié" })
+        }
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).json({ message: 'Ce post n\'existe pas' })
+        }
+
+        const post = await PostModel.findById(id)
+        // On stocke l'id du user dans les likes
+        const index = post.likes.findIndex((id) => id === String(req.userId))
+
+        if (index === -1) {
+            post.likes.push(req.userId)
+        } else {
+            post.likes = post.likes.filter((id) => id !== String(req.userId))
+        }
+
+        const updatedPost = await PostModel.findByIdAndUpdate(id, post, { new: true })
+        res.status(200).json(updatedPost)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+
 }

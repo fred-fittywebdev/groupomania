@@ -8,7 +8,7 @@ const postSchema = mongoose.Schema({
     imageFile: { type: String },
     tags: [String],
     createdAt: { type: Date, default: new Date() },
-    likeCount: { type: Number, default: 0 },
+    likes: { type: [String], default: [] },
 })
 
 export default mongoose.model('Post', postSchema);
