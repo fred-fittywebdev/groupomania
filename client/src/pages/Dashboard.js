@@ -17,6 +17,7 @@ const Dashboard = () => {
         if (userId) {
             dispatch(getPostsByUser(userId))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId])
 
 
@@ -33,7 +34,12 @@ const Dashboard = () => {
 
     return (
         <div style={{ margin: 'auto', padding: '120px', maxWidth: '900px', alignContent: 'center' }}>
-            <h4 className="text-center">Tableau de bord: {user?.result?.name} </h4>
+            {userPosts.length === 0 && (
+                <h4>Bonjour {user?.result?.name} vous n'avez pas encore de post</h4>
+            )}
+            {userPosts.length > 0 && (
+                <h4 className="text-center">Tableau de bord: {user?.result?.name} </h4>
+            )}
             <hr style={{ maxWidth: '570px' }} />
             {userPosts && userPosts.map((item) => (
                 <MDBCardGroup key={item._id}>

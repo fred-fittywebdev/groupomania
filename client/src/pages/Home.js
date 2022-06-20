@@ -16,11 +16,12 @@ const Home = () => {
     const { posts, loading, currentPage, numberOfPages } = useSelector((state) => ({ ...state.post }))
     const dispatch = useDispatch()
     const query = useQuery()
-    const searchQuery = query.get('searchQuery')
+    const searchQuery = query.get("searchQuery")
     const location = useLocation()
 
     useEffect(() => {
         dispatch(getPosts(currentPage))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage])
 
     if (loading) {
@@ -30,21 +31,21 @@ const Home = () => {
     return (
         <div style={{ margin: 'auto', padding: '15px', maxWidth: '1000px', alignContent: 'center' }}>
             <MDBRow className='mt-5'>
-                {posts.length === 0 && (
+                {posts.length === 0 && location.pathname === '/' && (
                     <MDBTypography className='text-center mb-0' tag="h2">
                         Aucun post à afficher !
                     </MDBTypography>
                 )}
                 {posts.length === 0 && location.pathname !== "/" && (
                     <MDBTypography className="text-center mb-0" tag="h2">
-                        We couldn't find any matches for "{searchQuery}"
+                        Nous ne trouvons pas de correspondance pour votre recherche.
                     </MDBTypography>
                 )}
                 <MDBCol>
                     <MDBContainer>
                         <MDBRow className="row-cols-1 row-cols-md-3 g-2">
-                            {posts && posts.map((item, index) => (
-                                <PostTour key={index} {...item} />
+                            {posts && posts.map((item) => (
+                                <PostTour key={item._id} {...item} />
                             ))}
                         </MDBRow>
                     </MDBContainer>

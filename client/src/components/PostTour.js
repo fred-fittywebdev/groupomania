@@ -64,8 +64,8 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes }) => {
                             )}
                         </MDBBtn>
                     </div>
-                    <span className="text-start">{tags.map((tag) => (
-                        <Link className='tag_card' to={`/posts/tag/${tag}`}> #{tag}</Link>
+                    <span className="text-start">{tags.map((tag, index) => (
+                        <Link key={index} className='tag_card' to={`/posts/tag/${tag}`}> #{tag}</Link>
                     ))}</span>
                 </div>
 
