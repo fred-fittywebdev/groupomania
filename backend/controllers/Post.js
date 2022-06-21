@@ -30,10 +30,12 @@ export const getPosts = async (req, res) => {
         const startIndex = (Number(page) - 1) * limit
         const total = await PostModel.countDocuments({}) // On récupère le nombre total de post en bdd
         const posts = await PostModel.find().limit(limit).skip(startIndex)
+        const totalPostsData = await PostModel.find()
         res.json({
             data: posts,
             currentPage: Number(page),
             totalPosts: total,
+            totalPostsData,
             numberOfPages: Math.ceil(total / limit)
         })
     } catch (error) {
@@ -82,7 +84,7 @@ export const deletePost = async (req, res) => {
 // Modifier un post
 export const updatePost = async (req, res) => {
     const { id } = req.params
-    const { title, content, creator, imageFile, tags } = req.body
+    const { title, content, creator, imageFile, tags, category } = req.body
 
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -95,6 +97,7 @@ export const updatePost = async (req, res) => {
             content,
             tags,
             imageFile,
+            category,
             _id: id
         }
 
@@ -169,5 +172,15 @@ export const likePost = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
+}
 
+// Récuperer tous les tags
+export const getAllTags = async (req, res) => {
+    try {
+        const posts = await PostModel.find()
+        const totalTags = [... new Set(posts.flatMap(({ tags }) => tags))]
+        res.json(totalTags)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
 }
