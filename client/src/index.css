@@ -125,6 +125,11 @@ code {
 	font-size: 14px;
 }
 
+.badge_custom {
+	text-align: left;
+	margin: 10px 0 0 20px;
+}
+
 /* TAGPOST COMPONENT */
 .tagPost_btn {
 	background-color: #fd2d01 !important;

@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { likePost } from '../redux/features/postSlice'
 import Badge from './Badge'
 
-const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, creator, category }) => {
+const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, creator, category, }) => {
     const { user } = useSelector((state) => ({ ...state.auth }))
     const userId = user?.result?._id // on récupère l'id du userId
     const dispatch = useDispatch()
@@ -60,7 +60,7 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
                 {imageFile && (
                     <MDBCardImage src={imageFile} alt={title} position='top' style={{ maxWidth: '100%', maxHeight: '180px', objectFit: 'cover' }} />
                 )}
-                <Badge />{category}
+                <Badge style={'styleInfo'}>{category}</Badge>
                 <div className="info_wrapper">
                     <div className="top_left">{name}
 

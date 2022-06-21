@@ -3,14 +3,14 @@ import { MDBBadge } from 'mdb-react-ui-kit'
 
 const Badge = ({ children, styleInfo }) => {
     const colorKey = {
-        RH: "#fdab01",
-        Loisirs: '#fd0153',
-        Teambuilding: '#01fd2d',
-        Voyages: '#2d01fd',
-        Evenements: '#01d1fd',
+        RH: "primary",
+        Loisirs: 'secondary',
+        Teambuilding: 'danger',
+        Voyages: 'warning',
+        Evenements: 'info',
     }
     return (
-        <h5 style={styleInfo}>
+        <h5 className='badge_custom' style={styleInfo}>
             <MDBBadge color={colorKey[children]}>{children}</MDBBadge>
         </h5>
     )

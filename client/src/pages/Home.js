@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTags, getPosts, setCurrentPage } from '../redux/features/postSlice'
@@ -16,6 +16,7 @@ function useQuery() {
 
 const Home = ({ socket }) => {
     const { posts, loading, currentPage, numberOfPages, totalTags, totalPostsData } = useSelector((state) => ({ ...state.post }))
+    const [visible, setVisible] = useState(false)
     const dispatch = useDispatch()
     const query = useQuery()
     const searchQuery = query.get("searchQuery")
@@ -37,6 +38,22 @@ const Home = ({ socket }) => {
             count: counts[k]
         }
     })
+
+    const checkScreenSize = () => {
+        if (window.innerWidth < 950) {
+            setVisible(true)
+        } else {
+            setVisible(false)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("resize", checkScreenSize)
+
+        return () => {
+            window.removeEventListener("resize", checkScreenSize)
+        }
+    }, [])
 
     useEffect(() => {
         dispatch(getAllTags())
@@ -73,10 +90,18 @@ const Home = ({ socket }) => {
                         </MDBRow>
                     </MDBContainer>
                 </MDBCol>
-                <MDBCol size={3} className='mt-4'>
-                    <PopularTags totalTags={totalTags} />
-                    <Categories categoryCount={categoryCount} />
-                </MDBCol>
+                {!visible && (
+                    <MDBCol size={3} className='mt-4'>
+                        <PopularTags totalTags={totalTags} />
+                        <Categories categoryCount={categoryCount} />
+                    </MDBCol>
+                )}
+                {visible && (
+                    <div className="mt-4">
+                        <PopularTags totalTags={totalTags} />
+                        <Categories categoryCount={categoryCount} />
+                    </div>
+                )}
                 <div className="mt-4">
                     {posts.length > 0 && !searchQuery && (
                         <Pagination
