@@ -124,6 +124,18 @@ export const getRelatedPosts = createAsyncThunk(
         }
     })
 
+export const getAllTags = createAsyncThunk(
+    'post/getAllTags',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await api.getAllTags()
+
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    })
+
 const postSlice = createSlice({
     name: 'post',
     initialState: {
@@ -134,8 +146,10 @@ const postSlice = createSlice({
         relatedPosts: [],
         currentPage: 1,
         numberOfPages: null,
+        totalTags: [],
         error: '',
         loading: false,
+        totalPostsData: [],
     },
     reducers: {
         setCurrentPage: (state, action) => {
@@ -162,6 +176,7 @@ const postSlice = createSlice({
             state.posts = action.payload.data
             state.numberOfPages = action.payload.numberOfPages
             state.currentPage = action.payload.currentPage
+            state.totalPostsData = action.payload.totalPostsData
         },
         [getPosts.rejected]: (state, action) => {
             state.loading = false;
@@ -261,6 +276,17 @@ const postSlice = createSlice({
             }
         },
         [likePost.rejected]: (state, action) => {
+            state.error = action.payload.message
+        },
+        [getAllTags.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [getAllTags.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.totalTags = action.payload
+        },
+        [getAllTags.rejected]: (state, action) => {
+            state.loading = false;
             state.error = action.payload.message
         },
     }

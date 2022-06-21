@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 import { excerpt } from '../utility'
 import { useSelector, useDispatch } from 'react-redux'
 import { likePost } from '../redux/features/postSlice'
+import Badge from './Badge'
 
-const PostTour = ({ imageFile, title, content, tags, _id, name, likes }) => {
+const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, creator, category }) => {
     const { user } = useSelector((state) => ({ ...state.auth }))
     const userId = user?.result?._id // on récupère l'id du userId
     const dispatch = useDispatch()
@@ -42,6 +43,13 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes }) => {
 
     const handleLike = () => {
         dispatch(likePost({ _id }))
+        const alreadyLiked = likes.find((like) => like === userId)
+        if (!alreadyLiked && userId !== creator) {
+            socket.emit("sendNotification", {
+                senderName: user?.result?.name,
+                receiverName: name
+            })
+        }
     }
 
 
@@ -52,8 +60,10 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes }) => {
                 {imageFile && (
                     <MDBCardImage src={imageFile} alt={title} position='top' style={{ maxWidth: '100%', maxHeight: '180px', objectFit: 'cover' }} />
                 )}
+                <Badge />{category}
                 <div className="info_wrapper">
                     <div className="top_left">{name}
+
                         <MDBBtn className="btn-like" tag='a' color='none' onClick={!user?.result ? null : handleLike}>
                             {!user?.result ? (
                                 <MDBTooltip tag="span" title="Veuillez vous connecter pour intéragir avec vos collègues">
@@ -67,8 +77,8 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes }) => {
                     <span className="text-start">{tags.map((tag, index) => (
                         <Link key={index} className='tag_card' to={`/posts/tag/${tag}`}> #{tag}</Link>
                     ))}</span>
-                </div>
 
+                </div>
                 <MDBCardBody>
                     <MDBCardTitle className='text-start'>{title}</MDBCardTitle>
                     <MDBCardText className='text-start'>{excerpt(content, 45)}

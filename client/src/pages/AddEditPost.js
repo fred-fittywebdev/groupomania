@@ -10,18 +10,22 @@ import { createPost, updatePost } from '../redux/features/postSlice'
 const initialState = {
     title: '',
     content: '',
+    category: '',
     tags: [],
 }
+
+const categoryOptions = ['RH', 'Loisirs', 'Teambuilding', 'Voyages', 'Evenements']
 
 const AddEditPost = () => {
     const [postData, setPostdata] = useState(initialState)
     const [tagErrMsg, setTagErrMsg] = useState(null)
+    const [categoryErrMsg, setCategoryErrMsg] = useState(null)
     const { error, loading, userPosts } = useSelector((state) => ({ ...state.post }))
     const { user } = useSelector((state) => ({ ...state.auth }))
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { title, content, tags } = postData
+    const { title, content, tags, category } = postData
     const { id } = useParams() // je récupère l'id du post à modifier
 
     useEffect(() => {
@@ -39,10 +43,13 @@ const AddEditPost = () => {
     // Soumission du formulaire
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (!category) {
+            setCategoryErrMsg("Veuillez choisir une catégorie")
+        }
         if (!tags.length) {
             setTagErrMsg('Veuillez choisir un tag svp !')
         }
-        if (title && content && tags) {
+        if (title && content && tags && category) {
             const updatedPostData = { ...postData, name: user?.result?.name }
 
             if (!id) {
@@ -72,9 +79,10 @@ const AddEditPost = () => {
         setPostdata({ title: '', content: '', tags: [] })
     }
 
-
-    // Suppression des données avant de modifer ou de poster
-
+    const onCategoryChange = (e) => {
+        setCategoryErrMsg(null)
+        setPostdata({ ...postData, category: e.target.value })
+    }
 
 
     return (
@@ -111,6 +119,19 @@ const AddEditPost = () => {
                                     required
                                     label='Message'
                                 />
+                            </div>
+                            <div className='col-md-12'>
+                                <select className='category_dropdown mt-3' onChange={onCategoryChange} value={category}>
+                                    <option>Choisissez une catégorie</option>
+                                    {categoryOptions.map((option, index) => (
+                                        <option value={option || ''} key={index}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+                                {setCategoryErrMsg && (
+                                    <div className='category_error_message'>{categoryErrMsg}</div>
+                                )}
                             </div>
                             <div className="col-md-12 mt-5 mb-3">
                                 <ChipInput
