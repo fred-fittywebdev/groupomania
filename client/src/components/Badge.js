@@ -1,7 +1,7 @@
 import React from 'react'
 import { MDBBadge } from 'mdb-react-ui-kit'
 
-const Badge = ({ children, styleInfo }) => {
+const Badge = ({ children }) => {
     const colorKey = {
         RH: "primary",
         Loisirs: 'secondary',
@@ -10,7 +10,7 @@ const Badge = ({ children, styleInfo }) => {
         Evenements: 'info',
     }
     return (
-        <h5 className='badge_custom' style={styleInfo}>
+        <h5 className='badge_custom'>
             <MDBBadge color={colorKey[children]}>{children}</MDBBadge>
         </h5>
     )

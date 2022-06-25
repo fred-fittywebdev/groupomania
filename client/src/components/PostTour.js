@@ -19,7 +19,7 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
                     <MDBIcon fas icon='thumbs-up' />
                     &nbsp;
                     {likes.length > 2 ? (
-                        <MDBTooltip tag='a' title={`Vous et ${likes.length - 1} autres personnes ont aimé ce post`}>
+                        <MDBTooltip tag='span' title={`Vous et ${likes.length - 1} autres personnes ont aimé ce post`}>
                             {likes.length} likes
                         </MDBTooltip>
                     ) : (
@@ -67,7 +67,7 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
                 {imageFile && (
                     <MDBCardImage src={imageFile} alt={title} position='top' style={{ maxWidth: '100%', maxHeight: '180px', objectFit: 'cover' }} />
                 )}
-                <Badge style={'styleInfo'}>{category}</Badge>
+                <Badge>{category}</Badge>
                 <div className="info_wrapper">
                     <div className="top_left">{name}
 
@@ -92,7 +92,7 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
                     </MDBCardText>
                     {user?.result && user?.result?.role === 'admin' && (
                         <div>
-                            <MDBBtn onClick={() => handleDelete(_id)} className='mt-1 delete_btn' tag='p' color='none'>
+                            <MDBBtn onClick={() => handleDelete(_id)} className='mt-1 delete_btn' tag='span' color='none'>
                                 Suppression
                             </MDBBtn>
                         </div>
