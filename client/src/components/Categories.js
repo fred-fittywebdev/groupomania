@@ -7,8 +7,8 @@ const Categories = ({ categoryCount }) => {
         <>
             <MDBCardTitle className='title text-start mt-2'>Catégories</MDBCardTitle>
             <MDBListGroup style={{ width: '22rem' }}>
-                {categoryCount.map((item) => (
-                    <Link to={`/posts/category/${item.category}`}>
+                {categoryCount.map((item, index) => (
+                    <Link key={index} to={`/posts/category/${item.category}`}>
                         <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
                             {item.category}
                             <MDBBadge pill>{item.count}</MDBBadge>

@@ -10,6 +10,7 @@ import decode from 'jwt-decode'
 // image
 import groupomania from '../images/icon.svg'
 import { searchPosts } from '../redux/features/postSlice'
+import { getUserProfile } from '../redux/features/profileSlice'
 
 const Header = ({ socket }) => {
     // Hamburger menu state
@@ -22,6 +23,16 @@ const Header = ({ socket }) => {
     const navigate = useNavigate()
     const { user } = useSelector((state) => ({ ...state.auth }))
     const token = user?.token
+    // image de l'utilisateur dans le header
+    const userId = user?.result?._id
+    const { userDetail } = useSelector((state) => ({
+        ...state.profile
+    }))
+
+    useEffect(() => {
+        userId && dispatch(getUserProfile(userId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId])
 
     useEffect(() => {
         if (socket) {
@@ -85,9 +96,11 @@ const Header = ({ socket }) => {
                 </MDBNavbarToggler>
                 <MDBCollapse show={show} navbar>
                     <MDBNavbarNav right fullWidth={false} className="mb-2 mb-lg-0">
-                        {user?.result?._id && (
+                        {/*
+                            {user?.result?._id && (
                             <h5 className="user_infos">Bonjour {user?.result?.name}</h5>
                         )}
+                    */}
                         <MDBNavbarItem>
                             <MDBNavbarLink href='/'>
                                 <p className='header-text'>Acceuil</p>
@@ -108,11 +121,21 @@ const Header = ({ socket }) => {
                             </>
                         )}
                         {user?.result?._id ? (
-                            <MDBNavbarItem>
-                                <MDBNavbarLink href='/login'>
-                                    <p className='header-text' onClick={() => handleLogout()}>Logout</p>
+                            <>
+                                <MDBNavbarItem>
+                                    <MDBNavbarLink href='/login'>
+                                        <p className='header-text' onClick={() => handleLogout()}>Logout</p>
+                                    </MDBNavbarLink>
+                                </MDBNavbarItem>
+                                {/*
+                                <MDBNavbarItem>
+                                <MDBNavbarLink href={`/profile/${user?.result?._id}`}>
+                                    <p className='header-text'>Mon compte</p>
                                 </MDBNavbarLink>
-                            </MDBNavbarItem>
+                                </MDBNavbarItem>
+                            */}
+
+                            </>
                         ) : (
                             <MDBNavbarItem>
                                 <MDBNavbarLink href='/login'>
@@ -133,6 +156,17 @@ const Header = ({ socket }) => {
                             <MDBIcon className='search-icon' onClick={handleSubmit} fas icon='search' />
                         </div>
                     </form>
+                    {userId && (
+                        <>
+                            <div style={{ cursor: 'pointer', marginLeft: '10px', display: `${show && 'inline-block'}` }} onClick={() => navigate(`/profile/${userId}`)}>
+                                <img src={userDetail?.imageFile ? userDetail.imageFile : "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                                    alt={userDetail?.name}
+                                    style={{ width: '30px', height: '30px', borderRadius: '50%', marginTop: '17px', objectFit: 'cover' }}
+                                />
+                                <p className="header-text" style={{ float: 'right', marginTop: '17px', marginLeft: '5px' }}>{userDetail?.name}</p>
+                            </div>
+                        </>
+                    )}
                     {user?.result?._id && (
                         <div className='mx-3' onClick={handleNotification}>
                             <MDBIcon fas icon="bell" style={{ cursor: 'pointer' }} />

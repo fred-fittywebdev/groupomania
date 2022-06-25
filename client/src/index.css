@@ -130,6 +130,18 @@ code {
 	margin: 10px 0 0 20px;
 }
 
+.delete_btn {
+	background-color: #fd2d01 !important;
+	color: #4e5166 !important;
+	width: 100% !important;
+	border-radius: 4px;
+}
+
+.delete_btn:hover {
+	background-color: #4e5166 !important;
+	color: #fd2d01 !important;
+}
+
 /* TAGPOST COMPONENT */
 .tagPost_btn {
 	background-color: #fd2d01 !important;
@@ -212,4 +224,41 @@ code {
 	color: #f93154;
 	text-align: left;
 	font-size: 14px;
+}
+
+/* PROFILE COMPONENET */
+.info {
+	font-size: 16px !important;
+	color: #4e5166 !important;
+	font-weight: 400 !important;
+}
+
+.profile_btn {
+	background-color: #ffd7df !important;
+	color: #4e5166 !important;
+}
+
+.profile_btn:hover {
+	background-color: #4e5166 !important;
+	color: #ffd7df !important;
+}
+
+.profile_btn_save {
+	background-color: #01d1fd !important;
+	color: #4e5166 !important;
+}
+
+.profile_btn_save:hover {
+	background-color: #4e5166 !important;
+	color: #01d1fd !important;
+}
+
+.profile_btn_cancel {
+	background-color: #fd2d01 !important;
+	color: #4e5166 !important;
+}
+
+.profile_btn_cancel:hover {
+	background-color: #4e5166 !important;
+	color: #fd2d01 !important;
 }

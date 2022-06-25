@@ -18,6 +18,7 @@ import TagPosts from './pages/TagPosts';
 import { io } from "socket.io-client"
 import Categories from './components/Categories';
 import Category from './pages/Category';
+import Profile from './pages/Profile';
 
 function App() {
   const [socket, setSocket] = useState(null)
@@ -52,6 +53,7 @@ function App() {
           <Route path='/editPost/:id' element={<PrivateRoute> <AddEditPost /> </PrivateRoute>} />
           <Route path='/post/:id' element={<SinglePost />} />
           <Route path='/dashboard' element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
+          <Route path='/profile/:id' element={<PrivateRoute> <Profile /> </PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

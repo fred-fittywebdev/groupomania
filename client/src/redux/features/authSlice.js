@@ -41,6 +41,12 @@ const authSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload
         },
+        setProfile: (state, action) => {
+            state.user.result = action.payload
+            let localStorageResult = JSON.parse(localStorage.getItem('profile'))
+            localStorageResult.result = action.payload
+            localStorage.setItem('profile', JSON.stringify(localStorageResult))
+        },
         setLogout: (state, action) => {
             localStorage.clear()
             state.user = null
@@ -74,6 +80,6 @@ const authSlice = createSlice({
     }
 })
 
-export const { setUser, setLogout } = authSlice.actions
+export const { setUser, setLogout, setProfile } = authSlice.actions
 
 export default authSlice.reducer

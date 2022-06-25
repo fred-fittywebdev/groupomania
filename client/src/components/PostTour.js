@@ -3,8 +3,9 @@ import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBCardG
 import { Link } from 'react-router-dom'
 import { excerpt } from '../utility'
 import { useSelector, useDispatch } from 'react-redux'
-import { likePost } from '../redux/features/postSlice'
+import { likePost, deletePost } from '../redux/features/postSlice'
 import Badge from './Badge'
+import { toast } from 'react-toastify'
 
 const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, creator, category, }) => {
     const { user } = useSelector((state) => ({ ...state.auth }))
@@ -52,6 +53,12 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
         }
     }
 
+    const handleDelete = (id) => {
+        if (window.confirm('Etes vous sur de vouloir supprimer ce post?')) {
+            dispatch(deletePost({ id, toast }))
+        }
+    }
+
 
     return (
         <MDBCardGroup>
@@ -64,7 +71,7 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
                 <div className="info_wrapper">
                     <div className="top_left">{name}
 
-                        <MDBBtn className="btn-like" tag='a' color='none' onClick={!user?.result ? null : handleLike}>
+                        <MDBBtn className="btn-like" tag='p' color='none' onClick={!user?.result ? null : handleLike}>
                             {!user?.result ? (
                                 <MDBTooltip tag="span" title="Veuillez vous connecter pour intéragir avec vos collègues">
                                     <Likes />
@@ -77,16 +84,22 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
                     <span className="text-start">{tags.map((tag, index) => (
                         <Link key={index} className='tag_card' to={`/posts/tag/${tag}`}> #{tag}</Link>
                     ))}</span>
-
                 </div>
                 <MDBCardBody>
                     <MDBCardTitle className='text-start'>{title}</MDBCardTitle>
                     <MDBCardText className='text-start'>{excerpt(content, 45)}
                         <Link to={`/post/${_id}`}>soyez curieux !</Link>
                     </MDBCardText>
+                    {user?.result && user?.result?.role === 'admin' && (
+                        <div>
+                            <MDBBtn onClick={() => handleDelete(_id)} className='mt-1 delete_btn' tag='p' color='none'>
+                                Suppression
+                            </MDBBtn>
+                        </div>
+                    )}
                 </MDBCardBody>
             </MDBCard>
-        </MDBCardGroup>
+        </MDBCardGroup >
     )
 }
 

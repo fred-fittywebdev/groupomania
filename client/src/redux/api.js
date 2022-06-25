@@ -34,3 +34,10 @@ export const likePost = (id) => API.patch(`/post/like/${id}`)
 
 //getAllTags
 export const getAllTags = () => API.get('/post/totalTags')
+
+//users
+export const getProfile = (id) => API.get(`/profile/${id}`)
+export const updateProfile = (id, userInfo) => API.patch(`/profile/${id}`, userInfo)
+
+// all posts for admin
+export const loadMorePosts = (skip) => API.get(`/post/loadMorePosts?skip=${skip}`)

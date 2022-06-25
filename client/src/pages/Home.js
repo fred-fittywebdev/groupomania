@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
+import { MDBBtn, MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTags, getPosts, setCurrentPage } from '../redux/features/postSlice'
 import PostTour from '../components/PostTour'
 import Spinner from '../components/Spinner'
 import Pagination from '../components/Pagination'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PopularTags from '../components/PopularTags'
 import Categories from '../components/Categories'
 
@@ -18,6 +18,7 @@ const Home = ({ socket }) => {
     const { posts, loading, currentPage, numberOfPages, totalTags, totalPostsData } = useSelector((state) => ({ ...state.post }))
     const [visible, setVisible] = useState(false)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const query = useQuery()
     const searchQuery = query.get("searchQuery")
     const location = useLocation()

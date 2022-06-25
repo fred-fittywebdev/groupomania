@@ -8,8 +8,8 @@ const PopularTags = ({ totalTags }) => {
             <MDBCardTitle className='title text-start' >Vous aimez</MDBCardTitle>
             <div className="tag-label text-start">
                 <ul>
-                    {totalTags.map((tag) => (
-                        <li outline color='info' className='m-1 tag'>
+                    {totalTags.map((tag, index) => (
+                        <li key={index} color='info' className='m-1 tag'>
                             <NavLink to={`posts/tag/${tag}`} style={{ color: '#4E5166' }}>
                                 {tag}
                             </NavLink>

@@ -136,6 +136,18 @@ export const getAllTags = createAsyncThunk(
         }
     })
 
+export const loadMorePosts = createAsyncThunk(
+    'post/loadMorePosts',
+    async (skip, { rejectWithValue }) => {
+        try {
+            const response = await api.loadMorePosts(skip)
+
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    })
+
 const postSlice = createSlice({
     name: 'post',
     initialState: {
@@ -150,6 +162,8 @@ const postSlice = createSlice({
         error: '',
         loading: false,
         totalPostsData: [],
+        loadedPosts: [],
+        totalPosts: null
     },
     reducers: {
         setCurrentPage: (state, action) => {
@@ -286,6 +300,18 @@ const postSlice = createSlice({
             state.totalTags = action.payload
         },
         [getAllTags.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+        [loadMorePosts.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [loadMorePosts.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.loadedPosts = [...state.loadedPosts, ...action.payload.posts]
+            state.totalPosts = action.payload.totalPosts
+        },
+        [loadMorePosts.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message
         },
