@@ -20,7 +20,7 @@ const AddEditPost = () => {
     const [postData, setPostdata] = useState(initialState)
     const [tagErrMsg, setTagErrMsg] = useState(null)
     const [categoryErrMsg, setCategoryErrMsg] = useState(null)
-    const { error, loading, userPosts } = useSelector((state) => ({ ...state.post }))
+    const { error, userPosts } = useSelector((state) => ({ ...state.post }))
     const { user } = useSelector((state) => ({ ...state.auth }))
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -33,6 +33,7 @@ const AddEditPost = () => {
             const singlePost = userPosts.find((post) => post._id === id)
             setPostdata({ ...singlePost })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
     useEffect(() => {

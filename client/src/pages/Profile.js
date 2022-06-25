@@ -14,12 +14,13 @@ const Profile = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
-    const { userDetail, loading } = useSelector((state) => ({ ...state.profile }))
+    const { userDetail } = useSelector((state) => ({ ...state.profile }))
 
     useEffect(() => {
         if (id) {
             dispatch(getUserProfile(id))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
     const handleEdit = () => {

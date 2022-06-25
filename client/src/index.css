@@ -28,11 +28,19 @@ code {
 .logo {
 	width: 35px;
 }
+
+.brand_wrapper {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
 .header-text {
 	color: #4e5166;
 	font-weight: 500;
-	margin-top: 0.9375rem;
+	margin-top: 1.25rem;
 	font-size: 1.0625rem;
+	cursor: pointer;
+	padding: 5px;
 }
 
 .user_infos {
