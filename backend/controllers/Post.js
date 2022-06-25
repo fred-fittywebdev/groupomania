@@ -34,7 +34,6 @@ export const getPosts = async (req, res) => {
         res.json({
             data: posts,
             currentPage: Number(page),
-            totalPosts: total,
             totalPostsData,
             numberOfPages: Math.ceil(total / limit)
         })
@@ -42,6 +41,7 @@ export const getPosts = async (req, res) => {
         res.status(404).json({ message: 'Une erreur est survenue.' })
     }
 }
+
 
 // Récupération d'un seul post grâce a son ID'
 export const getPost = async (req, res) => {

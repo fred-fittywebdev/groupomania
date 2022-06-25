@@ -10,6 +10,7 @@ import { Server } from 'socket.io'
 // Routes
 import userRouter from './routes/user.routes.js'
 import postRouter from './routes/post.routes.js'
+import profileRouter from './routes/profile.routes.js'
 
 // dotenv
 dotenv.config()
@@ -72,6 +73,7 @@ io.on("connection", (socket) => {
 // Routes
 app.use('/users', userRouter)
 app.use('/post', postRouter)
+app.use('/profile', profileRouter)
 
 const PORT = process.env.PORT || 8080;
 
