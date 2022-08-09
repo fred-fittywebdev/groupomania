@@ -25,7 +25,7 @@ export const updateProfile = async (req, res) => {
             _id: id
         }
         await UserModel.findByIdAndUpdate(id, updatedProfile, { new: true })
-        res.status(200).json(updateProfile)
+        res.status(200).json(updatedProfile)
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
