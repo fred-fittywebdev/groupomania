@@ -112,10 +112,12 @@ code {
 	color: #4e5166;
 	font-weight: 600;
 	font-size: 18px;
+	margin-bottom: 10px;
 }
 
 .btn-like {
 	margin-right: 35px;
+	margin-bottom: 1px !important;
 }
 
 .tag_card {
@@ -138,11 +140,22 @@ code {
 	margin: 10px 0 0 20px;
 }
 
+.admin_actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.card-body {
+	padding: 1.5rem 1.5rem 0 1.5rem !important;
+}
+
 .delete_btn {
-	background-color: #fd2d01 !important;
+	/* background-color: #fd2d01 !important; */
 	color: #4e5166 !important;
-	width: 100% !important;
+	/* width: 100% !important; */
 	border-radius: 4px;
+	margin-bottom: 10px;
 }
 
 .delete_btn:hover {

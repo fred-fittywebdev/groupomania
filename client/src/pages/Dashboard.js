@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBCardGroup } from 'mdb-react-ui-kit'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { getPostsByUser, deletePost } from '../redux/features/postSlice'
 import Spinner from '../components/Spinner'
 import { toast } from 'react-toastify'
@@ -11,6 +11,8 @@ const Dashboard = () => {
     const { user } = useSelector((state) => ({ ...state.auth }))
     const { userPosts, loading } = useSelector((state) => ({ ...state.post }))
     const userId = user?.result?._id
+    // To grab the pathname to retreive in AddEditPost to populate data on update
+    const { pathname } = useLocation();
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -75,7 +77,8 @@ const Dashboard = () => {
                                                 onClick={() => handleDelete(item._id)}
                                             />
                                         </MDBBtn>
-                                        <Link to={`/editPost/${item._id}`}>
+                                        <Link to={`/editPost/${item._id}`} state={{ previousPath: pathname }}>
+                                            {console.log(pathname)}
                                             <MDBIcon
                                                 fas
                                                 icon='edit'

@@ -3,7 +3,7 @@ import { MDBCard, MDBCardBody, MDBValidation, MDBBtn, MDBIcon, MDBInput, MDBVali
 import ChipInput from 'material-ui-chip-input'
 import Filebase from 'react-file-base64'
 import { toast } from 'react-toastify'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, updatePost } from '../redux/features/postSlice'
 
@@ -20,18 +20,29 @@ const AddEditPost = () => {
     const [postData, setPostdata] = useState(initialState)
     const [tagErrMsg, setTagErrMsg] = useState(null)
     const [categoryErrMsg, setCategoryErrMsg] = useState(null)
-    const { error, userPosts } = useSelector((state) => ({ ...state.post }))
+    const { error, userPosts, posts } = useSelector((state) => ({ ...state.post }))
     const { user } = useSelector((state) => ({ ...state.auth }))
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    // Retreive the previous location pathname here
+    const { state } = useLocation();
+
     const { title, content, tags, category } = postData
     const { id } = useParams() // je récupère l'id du post à modifier
 
+    // Here we grab the previous location pathname and make a condition, to allow populate data depending witch page we came from, dashboard or home.
+    // Depending on that pathname we assign posts or userPosts to singlePosts variable.
     useEffect(() => {
         if (id) {
-            const singlePost = userPosts.find((post) => post._id === id)
-            setPostdata({ ...singlePost })
+            if (state?.previousPath === "/dashboard") {
+                const singlePost = userPosts.find((post) => post._id === id)
+                setPostdata({ ...singlePost })
+            } else {
+                const singlePost = posts.find((post) => post._id === id)
+                setPostdata({ ...singlePost })
+            }
+
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
@@ -163,6 +174,7 @@ const AddEditPost = () => {
                             </div>
                         </MDBValidationItem>
                     </MDBValidation>
+                    <p>Previous route: {state?.previousPath || "undefined"}</p>
                 </MDBCardBody>
             </MDBCard>
         </div>

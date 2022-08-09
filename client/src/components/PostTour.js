@@ -13,7 +13,7 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
     const dispatch = useDispatch()
 
     const Likes = () => {
-        if (likes.length > 0) {
+        if (likes && likes.length) {
             return likes.find((like) => like === userId) ? (
                 <>
                     <MDBIcon fas icon='thumbs-up' />
@@ -90,13 +90,31 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
                     <MDBCardText className='text-start'>{excerpt(content, 45)}
                         <Link to={`/post/${_id}`}>soyez curieux !</Link>
                     </MDBCardText>
-                    {user?.result && user?.result?.role === 'admin' && (
-                        <div>
-                            <MDBBtn onClick={() => handleDelete(_id)} className='mt-1 delete_btn' tag='span' color='none'>
-                                Suppression
-                            </MDBBtn>
-                        </div>
-                    )}
+                    <div className="admin_actions">
+                        {user?.result && user?.result?.role === 'admin' && (
+                            <div>
+                                <MDBBtn className='mt-1 delete_btn' tag='span' color='none'>
+                                    <MDBIcon
+                                        fas
+                                        icon='trash'
+                                        style={{ color: '#fd2d01' }}
+                                        size='lg'
+                                        onClick={() => handleDelete(_id)}
+                                    />
+                                </MDBBtn>
+                            </div>
+                        )}
+                        {user?.result && user?.result?.role === 'admin' && (
+                            <Link to={`/editPost/${_id}`}>
+                                <MDBIcon
+                                    fas
+                                    icon='edit'
+                                    style={{ color: '#01d1fd ', marginLeft: '10px' }}
+                                    size='lg'
+                                />
+                            </Link>
+                        )}
+                    </div>
                 </MDBCardBody>
             </MDBCard>
         </MDBCardGroup >
