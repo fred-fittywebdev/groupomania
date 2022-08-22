@@ -84,9 +84,9 @@ const Home = ({ socket }) => {
                 )}
                 <MDBCol>
                     <MDBContainer>
-                        <MDBRow className="row-cols-1 row-cols-md-3 g-2">
+                        <MDBRow className="row-cols-1 row-cols-xl-3 row-cols-md-2 g-2">
                             {posts && posts.map((item) => (
-                                <PostTour key={item._id} socket={socket} {...item} />
+                                <PostTour key={item._id} {...item} />
                             ))}
                         </MDBRow>
                     </MDBContainer>

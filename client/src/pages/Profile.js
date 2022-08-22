@@ -48,9 +48,9 @@ const Profile = () => {
 
     return (
         <div style={{ margin: 'auto', padding: '15px', maxWidth: '1000px', alignContent: 'center', marginTop: '20px' }}>
-            <MDBRow className="mt-5 row-cols-1 row-cols-md-3 g-4" style={{ marginTop: '50px' }}>
+            <MDBRow className="mt-5 row-cols-1 row-cols-md-2 g-4" style={{ marginTop: '50px' }}>
                 <MDBCol>
-                    <MDBCard style={{ width: '18rem' }} className="d-sm-flex">
+                    <MDBCard style={{ width: '18rem' }} className="d-sm-flex justify-content-md-center">
                         <img src={userDetail?.imageFile ? userDetail.imageFile : "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
                             alt={userDetail?.name}
                             style={{
@@ -66,7 +66,7 @@ const Profile = () => {
                     </MDBCard>
                 </MDBCol>
                 <MDBCol>
-                    <MDBCard style={{ width: '38rem' }} className="mb-3" >
+                    <MDBCard style={{ maxWidth: '38rem' }} className="mb-3" >
                         {editMode && (
                             <div className="align-item-center">
                                 <FileBase type="file" multiple={false} onDone={({ base64 }) => setInfo({ ...info, imageFile: base64 })} />

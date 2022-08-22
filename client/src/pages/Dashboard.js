@@ -35,39 +35,34 @@ const Dashboard = () => {
 
 
     return (
-        <div style={{ margin: 'auto', padding: '120px', maxWidth: '900px', alignContent: 'center' }}>
+        <div className="dashboard-wrapper">
             {userPosts.length === 0 && (
                 <h4>Bonjour {user?.result?.name} vous n'avez pas encore de post</h4>
             )}
             {userPosts.length > 0 && (
-                <h4 className="text-center">Tableau de bord: {user?.result?.name} </h4>
+                <h4 className="text-start">Tableau de bord: {user?.result?.name} </h4>
             )}
-            <hr style={{ maxWidth: '570px' }} />
+            <hr style={{ maxWidth: '540px' }} />
             {userPosts && userPosts.map((item) => (
                 <MDBCardGroup key={item._id}>
-                    <MDBCard style={{ maxWidth: '600px' }} className='mt-2'>
+
+                    <MDBCard style={{ maxWidth: '540px' }} className='mt-2'>
                         <MDBRow className='g-0 p-2'>
                             <MDBCol md='4'>
-                                {item.imageFile && (
-                                    <MDBCardImage
-                                        className='rounded'
-                                        src={item.imageFile}
-                                        alt={item.title}
-                                        fluid
-                                    />
-                                )}
+                                <MDBCardImage className='rounded'
+                                    src={item.imageFile}
+                                    alt={item.title}
+                                    fluid />
                             </MDBCol>
                             <MDBCol md='8'>
                                 <MDBCardBody>
-                                    <MDBCardTitle className='text-start'>
-                                        {item.title}
-                                    </MDBCardTitle>
+                                    <MDBCardTitle className='text-start'>{item.title}</MDBCardTitle>
                                     <MDBCardText className='text-start'>
                                         <small className="text-muted">
                                             {excerpt(item.content, 35)}
                                         </small>
                                     </MDBCardText>
-                                    <div style={{ marginLeft: '5px', float: 'right', marginTop: '-60px' }}>
+                                    <MDBCardText className='text-start'>
                                         <MDBBtn className='mt-1' tag='a' color='none'>
                                             <MDBIcon
                                                 fas
@@ -86,7 +81,7 @@ const Dashboard = () => {
                                                 size='lg'
                                             />
                                         </Link>
-                                    </div>
+                                    </MDBCardText>
                                 </MDBCardBody>
                             </MDBCol>
                         </MDBRow>

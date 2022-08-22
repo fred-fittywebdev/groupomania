@@ -10,6 +10,19 @@ code {
 		monospace;
 }
 
+#disqus_thread {
+	position: relative;
+}
+#disqus_thread:after {
+	content: '';
+	display: block;
+	height: 55px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	background: white;
+}
+
 /* LOGIN PAGE */
 .login_btn,
 .btn_clear {
@@ -147,7 +160,7 @@ code {
 }
 
 .card-body {
-	padding: 1.5rem 1.5rem 0 1.5rem !important;
+	padding: 1.5rem 1.5rem 1.5rem 1.5rem !important;
 }
 
 .delete_btn {
@@ -257,6 +270,7 @@ code {
 .profile_btn {
 	background-color: #ffd7df !important;
 	color: #4e5166 !important;
+	margin-bottom: 10px;
 }
 
 .profile_btn:hover {
@@ -267,6 +281,7 @@ code {
 .profile_btn_save {
 	background-color: #01d1fd !important;
 	color: #4e5166 !important;
+	margin-bottom: 10px;
 }
 
 .profile_btn_save:hover {
@@ -277,9 +292,24 @@ code {
 .profile_btn_cancel {
 	background-color: #fd2d01 !important;
 	color: #4e5166 !important;
+	margin-bottom: 10px;
 }
 
 .profile_btn_cancel:hover {
 	background-color: #4e5166 !important;
 	color: #fd2d01 !important;
+}
+
+/* PROFILE COMPONENET */
+.dashboard-wrapper {
+	padding: 120px;
+	margin: 50px auto;
+	max-width: 900px;
+	align-content: center;
+}
+
+@media (max-width: 768px) {
+	.dashboard-wrapper {
+		padding: 50px;
+	}
 }

@@ -15,13 +15,11 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './pages/NotFound';
 import TagPosts from './pages/TagPosts';
-import { io } from "socket.io-client"
 import Categories from './components/Categories';
 import Category from './pages/Category';
 import Profile from './pages/Profile';
 
 function App() {
-  const [socket, setSocket] = useState(null)
   const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -29,21 +27,14 @@ function App() {
     dispatch(setUser(user))
   }, [])
 
-  useEffect(() => {
-    setSocket(io("http://localhost:8080"));
-  }, [])
-
-  useEffect(() => {
-    socket?.emit("newUser", user?.result?.name)
-  }, [socket, user])
 
   return (
     <BrowserRouter>
       <div className="App">
-        <Header socket={socket} />
+        <Header />
         <ToastContainer />
         <Routes>
-          <Route path='/' exact element={<Home socket={socket} />} />
+          <Route path='/' exact element={<Home />} />
           <Route path='/posts/search' element={<Home />} />
           <Route path='/posts/tag/:tag' element={<TagPosts />} />
           <Route path='posts/category/:category' element={<Category />} />

@@ -7,7 +7,7 @@ import { likePost, deletePost } from '../redux/features/postSlice'
 import Badge from './Badge'
 import { toast } from 'react-toastify'
 
-const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, creator, category, }) => {
+const PostTour = ({ imageFile, title, content, tags, _id, name, likes, creator, category, }) => {
     const { user } = useSelector((state) => ({ ...state.auth }))
     const userId = user?.result?._id // on récupère l'id du userId
     const dispatch = useDispatch()
@@ -44,13 +44,6 @@ const PostTour = ({ imageFile, title, content, tags, _id, name, likes, socket, c
 
     const handleLike = () => {
         dispatch(likePost({ _id }))
-        const alreadyLiked = likes.find((like) => like === userId)
-        if (!alreadyLiked && userId !== creator) {
-            socket.emit("sendNotification", {
-                senderName: user?.result?.name,
-                receiverName: name
-            })
-        }
     }
 
     const handleDelete = (id) => {

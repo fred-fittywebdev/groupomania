@@ -30,7 +30,7 @@ const SinglePost = () => {
 
     return (
         <>
-            <MDBContainer style={{ marginTop: '100px' }}>
+            <MDBContainer style={{ marginTop: '100px', maxWidth: '700px' }}>
                 <MDBCard className="mb-3 mt-2">
                     <MDBCardImage
                         position='top'

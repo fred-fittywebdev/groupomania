@@ -12,7 +12,7 @@ import groupomania from '../images/icon.svg'
 import { searchPosts } from '../redux/features/postSlice'
 import { getUserProfile } from '../redux/features/profileSlice'
 
-const Header = ({ socket }) => {
+const Header = () => {
     // Hamburger menu state
     const [show, setShow] = useState(false)
     // search
@@ -34,13 +34,6 @@ const Header = ({ socket }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId])
 
-    useEffect(() => {
-        if (socket) {
-            socket.on("getNotification", (data) => {
-                setNotifications((prev) => [...prev, data])
-            })
-        }
-    }, [socket])
 
     const handleNotification = () => {
         if (notifications.length) {
