@@ -26,7 +26,7 @@ export const getPosts = async (req, res) => {
         // const posts = await PostModel.find().sort({ createdAt: -1 },)
         // res.status(200).json(posts)
 
-        const limit = 3
+        const limit = 4
         const startIndex = (Number(page) - 1) * limit
         const total = await PostModel.countDocuments({}) // On récupère le nombre total de post en bdd
         const posts = await PostModel.find().limit(limit).skip(startIndex).sort({ createdAt: -1 })
