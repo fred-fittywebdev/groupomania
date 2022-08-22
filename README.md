@@ -21,7 +21,7 @@ Le backend a été crée avec **Node.js**, **Express.js** et **MongoDb** comme b
     <br />
 -   Démarrer `npm install` pour installer toutes les dependencies du backend.
 <br />
-<!--> -   Dans le fichier `.env`, veuillez rentrer le host, les identifiants de votre utilisateur admin et le nom de la base de données que vous souhaitez créer.
+<!-- -   Dans le fichier `.env`, veuillez rentrer le host, les identifiants de votre utilisateur admin et le nom de la base de données que vous souhaitez créer.
 -   Écrivez dans la ligne de commande `node config_db.js` pour configurer la base de données. -->
 
 ### Development server
