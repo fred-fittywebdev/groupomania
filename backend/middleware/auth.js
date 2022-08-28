@@ -9,18 +9,12 @@ const auth = async (req, res, next) => {
 
         let decodedData;
 
-        if (token && isCustomAuth) {
+        if (token) {
             decodedData = jwt.verify(token, SECRET);
 
             req.userId = decodedData?.id;
             req.userRole = decodedData?.role
-        } else {
-            decodedData = jwt.decode(token);
-
-            req.userId = decodedData?.sub;
-            req.userRole = decodedData?.sub;
         }
-
         next();
     } catch (error) {
         console.log(error);
