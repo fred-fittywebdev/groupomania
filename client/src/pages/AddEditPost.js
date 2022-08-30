@@ -174,7 +174,6 @@ const AddEditPost = () => {
                             </div>
                         </MDBValidationItem>
                     </MDBValidation>
-                    <p>Previous route: {state?.previousPath || "undefined"}</p>
                 </MDBCardBody>
             </MDBCard>
         </div>

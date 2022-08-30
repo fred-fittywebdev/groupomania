@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { MDBBtn, MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
+import {MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTags, getPosts, setCurrentPage } from '../redux/features/postSlice'
 import PostTour from '../components/PostTour'
@@ -58,6 +58,7 @@ const Home = ({ socket }) => {
 
     useEffect(() => {
         dispatch(getAllTags())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {

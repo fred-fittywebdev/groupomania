@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Header from './components/Header';
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { setUser } from './redux/features/authSlice';
 import AddEditPost from './pages/AddEditPost';
 import SinglePost from './pages/SinglePost';
@@ -15,7 +15,6 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './pages/NotFound';
 import TagPosts from './pages/TagPosts';
-import Categories from './components/Categories';
 import Category from './pages/Category';
 import Profile from './pages/Profile';
 
@@ -25,6 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(setUser(user))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
