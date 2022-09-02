@@ -1,12 +1,18 @@
 import PostModel from '../models/posts.js';
 import mongoose from 'mongoose';
+import jwt from "jsonwebtoken";
 
 
 // Création d'un post
 export const createPost = async (req, res) => {
     const post = req.body
     const newPost = new PostModel({
-        ...post,
+        title: req.body.title,
+        content: req.body.content,
+        category: req.body.category,
+        imageFile: req.body.imageFile,
+        tags: req.body.tags,
+        likes: req.body.likes,
         creator: req.userId,
         createdAt: new Date().toISOString()
     })
@@ -23,8 +29,6 @@ export const createPost = async (req, res) => {
 export const getPosts = async (req, res) => {
     const { page } = req.query
     try {
-        // const posts = await PostModel.find().sort({ createdAt: -1 },)
-        // res.status(200).json(posts)
 
         const limit = 4
         const startIndex = (Number(page) - 1) * limit
@@ -68,16 +72,29 @@ export const getPostsByUser = async (req, res) => {
 // Supprimer un post
 export const deletePost = async (req, res) => {
     const { id } = req.params
+    // Ici je récupère l'identifiant de la personne qui a créer le post
+    const creator = req.userId
+    // Ici je récupère les infos contenues dans le token dans une variable pour récupérer l'identifiant de la personne connectée.
+    const token = req.headers.authorization.split(" ")[1];
+    const SECRET = process.env.SECRET
+    let decodedUser = jwt.verify(token, SECRET)
+    console.log(decodedUser)
+    console.log(decodedUser?.id)
+    console.log(creator)
+    console.log(decodedUser?.existingUser)
 
-    try {
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(404).json({ message: `l' ${id} ne correspond a aucun post enregistré.` })
+    // Si l'identifiant du créteur du post et celui de la personne connectée sont identique, ou si la personne connectée est admin, j'autorise la suppression.
+    if (decodedUser?.id === creator || decodedUser?.existingUser === 'admin') {
+        try {
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(404).json({ message: `l' ${id} ne correspond a aucun post enregistré.` })
+            }
+
+            await PostModel.findByIdAndRemove(id)
+            res.json({ message: 'Le posta à bien été supprimé' })
+        } catch (error) {
+            res.status(404).json({ message: 'Une erreur est survenue.' })
         }
-
-        await PostModel.findByIdAndRemove(id)
-        res.json({ message: 'Le posta à bien été supprimé' })
-    } catch (error) {
-        res.status(404).json({ message: 'Une erreur est survenue.' })
     }
 }
 
@@ -86,26 +103,41 @@ export const updatePost = async (req, res) => {
     const { id } = req.params
     const { title, content, creator, imageFile, tags, category } = req.body
 
-    try {
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(404).json({ message: `l' ${id} ne correspond a aucun post enregistré.` })
-        }
+    // Ici je récupère les infos contenues dans le token dans une variable pour récupérer l'identifiant de la personne connectée.
+    const token = req.headers.authorization.split(" ")[1];
+    const SECRET = process.env.SECRET
+    let decodedUser = jwt.verify(token, SECRET)
+    console.log(decodedUser)
+    console.log(decodedUser?.id)
+    console.log(creator)
+    console.log(decodedUser?.existingUser)
 
-        const updatedPost = {
-            creator,
-            title,
-            content,
-            tags,
-            imageFile,
-            category,
-            _id: id
-        }
+    // Si l'identifiant du créteur du post présent dans le body de la requête  et celui de la personne connectée sont identique, ou si la personne connectée est admin, j'autorise la suppression.
+    if (decodedUser?.id === creator || decodedUser?.existingUser === 'admin') {
+        try {
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(404).json({ message: `l' ${id} ne correspond a aucun post enregistré.` })
+            }
 
-        await PostModel.findByIdAndUpdate(id, updatedPost, { new: true })
-        res.json(updatedPost)
-    } catch (error) {
-        res.status(404).json({ message: 'Une erreur est survenue.' })
+            const updatedPost = {
+                creator,
+                title,
+                content,
+                tags,
+                imageFile,
+                category,
+                _id: id
+            }
+
+            await PostModel.findByIdAndUpdate(id, updatedPost, { new: true })
+            res.json(updatedPost)
+        } catch (error) {
+            res.status(404).json({ message: 'Une erreur est survenue.' })
+        }
     }
+
+
+
 }
 
 // Chercher un post
